@@ -22,17 +22,17 @@
 `default_nettype none
 module program_counter(
     input wire clk,rst,branch,
-    input wire [31:2] imm_addr,
-    output reg [31:2] instr_addr
+    input wire [31:0] imm_addr,
+    output reg [31:0] instr_addr
     );
     
 always@(posedge clk or negedge rst)
 begin
-    if(rst==0) instr_addr <= 'h01000000/4;
+    if(rst==0) instr_addr <= 'h01000000;
     else
     begin
-        if(branch==1) instr_addr <= instr_addr + imm_addr;
-        else instr_addr <= instr_addr + 1;
+        if(branch==1) instr_addr <= instr_addr + {imm_addr[31:2],2'b00};
+        else instr_addr <= instr_addr + 4;
     end
 end
     
