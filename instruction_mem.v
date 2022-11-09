@@ -22,22 +22,22 @@
 `default_nettype none
 module instruction_mem(
     input wire clk,
-    input wire [31:2] instr_addr,
+    input wire [31:0] instr_addr,
     output wire [31:0] instr
     );
     
-    reg [31:0] imem ['h01000000/4:'h010007FF/4];
+    reg [7:0] imem ['h01000000:'h010007FF];
     //initial begin
     //    $readmemh("imem.mem", imem);
     //end  
     
-    reg [31:2] instr_addr_reg;
+    reg [31:0] instr_addr_reg;
     
     always@(posedge clk)
     begin
         instr_addr_reg <= instr_addr;
     end
     
-    assign instr = imem[instr_addr_reg];
+    assign instr = {imem[instr_addr_reg+3],imem[instr_addr_reg+2],imem[instr_addr_reg+1],imem[instr_addr_reg]};
     
 endmodule
