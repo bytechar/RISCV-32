@@ -24,9 +24,9 @@
 
 
 module ALU(
-    input [31:0] in_a,
-    input [31:0] in_b,
-    input [3:0] alu_select,
+    input wire [31:0] in_a,
+    input wire [31:0] in_b,
+    input wire [3:0] alu_select,
     output reg [31:0] result
     );
     
