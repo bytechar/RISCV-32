@@ -26,12 +26,12 @@ module program_counter(
     output reg [31:0] instr_addr
     );
     
-always@(posedge clk or negedge rst)
+    always@(posedge clk or posedge rst)
 begin
-    if(rst==0) instr_addr <= 'h01000000;
+    if(rst==1) instr_addr <= 32'h01000000;
     else
     begin
-        if(branch==1) instr_addr <= instr_addr + {imm_addr[31:2],2'b00};
+        if(branch==1) instr_addr <= instr_addr + imm_addr;
         else instr_addr <= instr_addr + 4;
     end
 end
