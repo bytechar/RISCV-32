@@ -1,4 +1,7 @@
 `timescale 1ns / 1ps
+`include "defines.vh"
+`default_nettype none
+
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -29,16 +32,17 @@ module ALU(
     
     always @(*) begin
     case(alu_select)
-        4'b0000: result = in_a + in_b; //ADD
-        4'b0001: result = in_a - in_b; //SUB
-        4'b0010: result = in_a << in_b[4:0]; //Shift Left Logical
-        4'b0011: result = $signed(in_a) < $signed(in_b); //Set Less than Signed
-        4'b0100: result = $unsigned(in_a) < $unsigned(in_b); //Set Less than Unsigned
-        4'b0101: result = in_a ^ in_b; //XOR
-        4'b0110: result = in_a >> in_b[4:0]; //Shift Right Logical
-        4'b0111: result = $signed(in_a) >>> in_b[4:0]; //Shift Right Arithmatic
-        4'b1000: result = in_a | in_b; //OR
-        4'b1001: result = in_a & in_b; //AND
+        `ADD: result = in_a + in_b; //ADD
+        `SUB: result = in_a - in_b; //SUB
+        `SLL: result = in_a << in_b[4:0]; //Shift Left Logical
+        `SLT: result = $signed(in_a) < $signed(in_b); //Set Less than Signed
+        `SLTU: result = $unsigned(in_a) < $unsigned(in_b); //Set Less than Unsigned
+        `XOR: result = in_a ^ in_b; //XOR
+        `SRL: result = in_a >> in_b[4:0]; //Shift Right Logical
+        `SRA: result = $signed(in_a) >>> in_b[4:0]; //Shift Right Arithmatic
+        `OR: result = in_a | in_b; //OR
+        `AND: result = in_a & in_b; //AND
+        default: result = result; //added default
     endcase
 end
 endmodule
