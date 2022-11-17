@@ -17,7 +17,7 @@ module register_file(
     
     reg [4:0] rs1_addr_reg, rs2_addr_reg;
     
-    always@(posedge clk or posedge rst)
+    always@(posedge clk or negedge rst)
     begin
     
         //update source register addresses
@@ -25,7 +25,7 @@ module register_file(
         rs2_addr_reg <= rs2_addr;
         
         //reset registers R1-R31 to 0, reset to R0 not permitted
-        if (rst==1) for(i=1;i<32;i=i+1) register_file[i] <= 32'h00000000;
+        if (rst==0) for(i=1;i<32;i=i+1) register_file[i] <= 32'h00000000;
         
         //write to registers R1-R31 as per rd signal if write enable (we) is asserted
         //write to R0 is not permitted
