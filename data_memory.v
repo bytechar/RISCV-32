@@ -1,3 +1,23 @@
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 11/16/2022 01:02:42 PM
+// Design Name: 
+// Module Name: DataMemory
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
 `timescale 1ns / 1ps
 `default_nettype none
 `include "defines.vh"
@@ -21,6 +41,7 @@
 
 module DMem(
     input wire clk,
+    input wire rst,
     input wire rd,
     input wire [3:0] we,
     input wire [31:0] addr_in,
@@ -56,11 +77,16 @@ module DMem(
     // Address Translation divide by 4
     assign addr= {2'b00, addr_in[`RAM_ADDR_BITS-1:2]};
 
-    always @(posedge clk) begin  
+    always @(posedge clk or negedge rst) begin  
     
-            if (addr_in[`STARTING_ADDR_BIT-1]) begin
+            if (rst == 0) begin
+            for (i=0; i<`RAM_LENGTH_WORDS; i = i+1) ram[i] <= 32'd0;
+            rom[4] <=0;
+            end
+            
+            else if (addr_in[`STARTING_ADDR_BIT-1]) begin
                 if (we)
-                    if(addr==12'd4) 
+                    if(addr==12'd5) 
                         rom[addr-1] <= data_in;                 // IO port write at addr == 4 (corresponds to rom[3])
                 if (rd)
                     if(addr == 12'd4 || addr == 12'd5)        
