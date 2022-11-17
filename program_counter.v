@@ -1,38 +1,36 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 11/07/2022 05:31:00 PM
-// Design Name: 
-// Module Name: program_counter
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
+`include "defines.vh"
 `default_nettype none
+
 module program_counter(
-    input wire clk,rst,branch,
-    input wire [31:0] imm_addr,
+    input wire clk,rst,imm,
+    input wire signed [31:0] imm_addr,
     output reg [31:0] instr_addr
     );
     
-    always@(posedge clk or posedge rst)
+reg [31:2] instr_addr_temp;
+
+always@(posedge clk or posedge rst)
 begin
+    
+    //reset to start of instruction memory 0x01000000
     if(rst==1) instr_addr <= 32'h01000000;
+    
     else
     begin
-        if(branch==1) instr_addr <= instr_addr + imm_addr;
-        else instr_addr <= instr_addr + 4;
+    
+        //add sign extended immediate if control signal imm is asserted
+        if(imm==1) instr_addr_temp = instr_addr[31:2] + imm_addr[31:2];
+        
+        //regular counter increment (4 bytes)
+        else instr_addr_temp = instr_addr[31:2] + 1;
+        
+        //reset program counter if out-of-bounds value is reached (outside of defined instruction memory addresses)
+        if (instr_addr_temp > 30'h010007FC/4 | instr_addr_temp < 30'h01000000/4) instr_addr <= 32'h01000000;
+        
+        //else update PC value and send out to instruction memory
+        else instr_addr <= {instr_addr_temp,2'b00};
+        
     end
 end
     
