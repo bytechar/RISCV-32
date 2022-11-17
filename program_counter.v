@@ -10,11 +10,11 @@ module program_counter(
     
 reg [31:2] instr_addr_temp;
 
-always@(posedge clk or posedge rst)
+    always@(posedge clk or negedge rst)
 begin
     
     //reset to start of instruction memory 0x01000000
-    if(rst==1) instr_addr <= 32'h01000000;
+    if(rst==0) instr_addr <= 32'h01000000;
     
     else
     begin
