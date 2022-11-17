@@ -4,7 +4,7 @@
 
 module program_counter(
     input wire clk,rst,imm,
-    input wire signed [31:0] imm_addr,
+    input wire [31:0] imm_addr,
     output reg [31:0] instr_addr
     );
     
@@ -19,8 +19,8 @@ begin
     else
     begin
     
-        //add sign extended immediate if control signal imm is asserted
-        if(imm==1) instr_addr_temp = instr_addr[31:2] + imm_addr[31:2];
+        //use immediate address generated outside PC if control signal imm is asserted
+        if(imm==1) instr_addr_temp = imm_addr[31:2];
         
         //regular counter increment (4 bytes)
         else instr_addr_temp = instr_addr[31:2] + 1;
