@@ -63,7 +63,7 @@ module DMem(
                     if(addr==12'd4) 
                         rom[addr-1] <= data_in;                 // IO port write at addr == 4 (corresponds to rom[3])
                 if (rd)
-                    if(addr == 12'd3 || addr == 12'd4)        
+                    if(addr == 12'd4 || addr == 12'd5)        
                         data_out <= rom[addr-1];                // IO port read allowed for special I/O registers (corresponds to rom[addr-1])
                     else
                         data_out <= rom[addr];                  // read N-Numbers from special read only registers
