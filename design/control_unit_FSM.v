@@ -86,7 +86,8 @@ module FSM_control_unit(
             end          
             HALT: begin                // Halt 
                 //Does Nothing
-            end         
+            end
+            default: next_state = IF;
        endcase
     end
 endmodule
