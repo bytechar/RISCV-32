@@ -19,7 +19,7 @@ module imm_extend(
             `STORE:  immediate = { {21{instr[31]}} , instr[30:25] , instr[11:7] };                          //S-type
             `LOAD:   immediate = { {21{instr[31]}} , instr[30:20] };                                        //I-type
             `IMM:    immediate = { {21{instr[31]}} , instr[30:20] };                                        //I-type
-            default: immediate = immediate;
+            default: immediate = { 32{1'b0} };
         endcase
     end
 
