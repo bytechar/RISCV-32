@@ -11,7 +11,7 @@ module branch_comp_tb();
     
     reg error_count = 0;
     
-    branch_comp dut(.data_in1(data1), .data_in2(data2), .bc_op(branch_op), .bc_out(branch));
+    branch_comp dut(.data_in1(data1), .data_in2(data2), .branch_op(branch_op), .branch_out(branch));
     
     initial begin
         data1 <= 32'hff786510;
