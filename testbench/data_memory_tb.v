@@ -39,37 +39,37 @@ rd <= 1;
 // read N numbers and match
 addr_in <= 32'h00100000;
 #20;
-if(data_out == 32'h`ANVAY) $display("TEST PASS for first N number"); else $error("TEST FAILED at time %0t", $time);
+if(data_out == 32'h`ANVAY) $display("TEST PASS for first N number"); else $fatal("TEST FAILED at time %0t", $time);
 #20;
 
 // read N numbers and match
 addr_in <= 32'h00100004;
 #20;
-if(data_out == 32'h`NAMAN) $display("TEST PASS for second N number"); else $error("TEST FAILED at time %0t", $time);
+if(data_out == 32'h`NAMAN) $display("TEST PASS for second N number"); else $fatal("TEST FAILED at time %0t", $time);
 #20;
 // read N numbers and match
 addr_in <= 32'h00100008;
 #20;
-if(data_out == 32'h`VIDYUT) $display("TEST PASS for third N number"); else $error("TEST FAILED at time %0t", $time);
+if(data_out == 32'h`VIDYUT) $display("TEST PASS for third N number"); else $fatal("TEST FAILED at time %0t", $time);
 #20;
 
 // read only switch
 addr_in <= 32'h00100010;
 #20;
-if(data_out == 32'h0) $display("TEST PASS for switch"); else $error("TEST FAILED at time %0t", $time);
+if(data_out == 32'h0) $display("TEST PASS for switch"); else $fatal("TEST FAILED at time %0t", $time);
 #20;
 
 // read only switch
 addr_in <= 32'h00100014;
 #20;
-if(data_out == 32'h0) $display("TEST PASS for LED read"); else $error("TEST FAILED at time %0t", $time);
+if(data_out == 32'h0) $display("TEST PASS for LED read"); else $fatal("TEST FAILED at time %0t", $time);
 #20;
 
 //write to LED
 addr_in <= 32'h00100014;
 we <= 1;
 #40;
-if(data_out == 32'hFEDCBA98) $display("TEST PASS for LED write"); else $error("TEST FAILED at time %0t", $time);
+if(data_out == 32'hFEDCBA98) $display("TEST PASS for LED write"); else $fatal("TEST FAILED at time %0t", $time);
 #20;
 
 we <= 4'b1111;
@@ -80,10 +80,11 @@ addr_in = 32'h80000000 + i;
 rand_wdata = $random;
 data_in = rand_wdata;
 #40;
-if(data_out == rand_wdata) $display("Expected value matches value at ram[%0d]", i); else $error("TEST FAILED for ram[%d] at time %0t", i, $time);
+if(data_out == rand_wdata) $display("Expected value matches value at ram[%0d]", i); else $fatal("TEST FAILED for ram[%d] at time %0t", i, $time);
 #20;
 end
 
+$display("All test cases passed");
 $finish;
 
 end
