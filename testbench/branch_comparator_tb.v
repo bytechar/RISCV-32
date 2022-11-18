@@ -149,7 +149,7 @@ module branch_comp_tb();
             error_count = error_count + 1;
             end
         #10;
-        $display("All test cases passed");
+        if (error_count == 0) $display("All test cases passed");
         $finish;
     end
     
