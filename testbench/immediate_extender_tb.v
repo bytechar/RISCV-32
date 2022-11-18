@@ -68,7 +68,7 @@ module imm_ext_tb( );
 
          #10;
 
-         $display("All test cases passed");
+         if (error_count == 0) $display("All test cases passed");
 
         $finish;
 
