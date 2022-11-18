@@ -5,7 +5,7 @@ module imm_ext_tb( );
     reg [31:0] instr;
     wire [31:0] ext_imm;
     
-    imm_ext DUT(.instr(instr), .immediate(ext_imm));
+    imm_extend DUT(.instr(instr), .immediate(ext_imm));
 
     reg error_count = 0;
     
