@@ -32,7 +32,7 @@ Program Counter
 
 Instruction Memory
 1. Design (instruction_mem.v, imem.mem)
-- Instruction memory has been implemented as a 2Kbyte instruction memory designed to store 512x4-byte long instruction words. The memory addresses start from 0x01000000 and goes to 0x010007FF. 
+- Instruction memory has been implemented as a 2Kbyte instruction memory designed to store 512x4-byte long instruction words. The memory addresses start from 0x01000000 and goes to 0x010007FF with one byte of data stored at each address. Hence, one instruction word spans 4 addresses in little endian format. Only a complete instruction word can be read from the memory. 
 
 2. Testbench (instruction_mem_tb.v, imem_testcases.csv)
 - Design loads imem.mem file to memory. Testcases are written to randomly access all addresses and stored instruction value is compared. Hence all addresses in memory are tested.
