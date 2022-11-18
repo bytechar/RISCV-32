@@ -33,45 +33,76 @@ module control_unit_FSM_TB();
     initial clk = 0;
     always #10 clk = ~clk;
     
+    reg error_count = 0;
+    
     //intial block to test
     initial begin
     
     rstn <= 0;
+    #20; 
     
     // test R type
+    rstn <= 1;
     load <= 0;
     store <= 0;
     branch <= 0;
     fence <= 0;
     decoder_dmem_we <= 0;
     halt <= 0;
-    
+       
     #120; 
     
-    // test store
+    if(rf_we != 1)  begin
+            $error("Output mismatch");
+            error_count = error_count + 1;
+            end
+
+    
+
     rstn <=0;
+    #20; 
+    
+    // test store
+    rstn <= 1;
     load <= 0;
     store <= 1;
     branch <= 0;
     fence <= 0;
     decoder_dmem_we <= 4'b1111;
     halt <= 0;
-    
+        
     #120;
     
-    //test load
+    if (dmem_we != 4'b1111)  begin
+            $error("Output mismatch");
+            error_count = error_count + 1;
+            end
+
     rstn <=0;
+    #20;
+    
+    //test load
+    rstn <= 1;
     load <= 1;
     store <= 0;
     branch <= 0;
     fence <= 0;
     decoder_dmem_we <= 0;
     halt <= 0;
-    
+        
     #120;
     
-    //test branch
+    if (dmem_rd != 1)  begin
+            $error("Output mismatch");
+            error_count = error_count + 1;
+            end
+
+    
     rstn <=0;
+    #20;
+    
+    //test branch
+    rstn <= 1;
     load <= 0;
     store <= 0;
     branch <= 1;
@@ -81,8 +112,16 @@ module control_unit_FSM_TB();
     
     #120;
     
-    //test halt
+    if (pc_we != 1 && rf_we != 0)  begin
+            $error("Output mismatch");
+            error_count = error_count + 1;
+            end
+    
     rstn <=0;
+    #20;
+    
+    //test halt
+    rstn <= 1;
     load <= 1;
     store <= 1;
     branch <= 0;
@@ -91,8 +130,16 @@ module control_unit_FSM_TB();
     halt <= 1; 
     #120;
     
-    //test fence
+    if(pc_we != 0)  begin
+            $error("Output mismatch");
+            error_count = error_count + 1;
+            end
+    
     rstn <=0;
+    #20;
+    
+    //test fence
+    rstn <= 1;
     load <= 1;
     store <= 0;
     branch <= 1;
@@ -100,9 +147,17 @@ module control_unit_FSM_TB();
     decoder_dmem_we <= 4'b1111;
     halt <= 0;  
     #120;
+    
+    if(rf_we != 0)  begin
+            $error("Output mismatch");
+            error_count = error_count + 1;
+            end
       
     #120;
-    $finish(); 
+    
+    if (error_count == 0) $display("All test cases passed");
+    
+    $finish();
      
     end
     
