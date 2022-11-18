@@ -82,7 +82,7 @@ The testbench BranComp_TB.v verifies for all the branch operations supported by 
 1. Design (Control_unit_FSM)
 The control_unit_FSM.v module contains the Control unit of the processor. It generates the control signals for coordinating all the modules according to the instruction being executed and takes care of the multicycle state machine for current execution cycle (Instruction Fetch, Instruction decode and execution, Memory, Write back and PC update, and Halt). he behavior of the system is governed by an FSM that lists 5 states: fetch-access the memory to get the next instruction (activate the read signal, place the right memory address on address bus, read the content of memory pointed by the address), decoding (interpret the data bits of instruction word to identify the operation and its data which can be taken from memory or registers), execution ( perform specific operation using processor resources and write the result into memory and/or registers). Our Processor implements a Mealy machine where current output is dependent on current input and current state. The FSM states 
 
-![FSM](FSM (Control Unit).drawio.png)
+![FSM](https://github.com/naman-47/RISCV-32I-AHD/blob/main/FSM%20(Control%20Unit).drawio.png)
 
 2. Testbench (control_unit_FSM_tb.v)
 The control unit testbench comprises test cases for all the instructions. It checks if the proper control signals for the current instruction being executed are generated for all the instructions. The testbench checks for all the instrcutions if the resulting states are as expected, verified through the control signals generated in those states.
