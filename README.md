@@ -1,6 +1,10 @@
 # RISCV-32I-AHD
 Advanced Hardware Design Project
 
+Group_5
+1. Anvay Gumaste(ag5994)
+2. Naman Sharma(ns5273)
+3. Vidyut Singh(vps4038)
 
 - All design files inside Final_project --> Final_project.srcs --> sources_1
 - All testbench files inside Final_project --> Final_project.srcs --> sim_1
