@@ -12,17 +12,17 @@ module BranchComp(
     always@(*) begin
         case(branch_op)
             `BEQ: // Branch if equal
-                branch_out <= (data_in1==data_in2) ? 1:0;
+                branch_out = (data_in1==data_in2) ? 1:0;
             `BNE: // Branch if not equal
-                branch_out <= (data_in1==data_in2) ? 0:1;
+                branch_out = (data_in1==data_in2) ? 0:1;
             `BLT: // Branch if less than (signed)
-                branch_out <= ($signed(data_in1) < $signed(data_in2)) ? 1:0;
+                branch_out = ($signed(data_in1) < $signed(data_in2)) ? 1:0;
             `BGE: // branch if greater than or equal (signed)
-                branch_out <= ($signed(data_in1) < $signed(data_in2)) ? 0:1;
+                branch_out = ($signed(data_in1) < $signed(data_in2)) ? 0:1;
             `BLTU: // branch if less than (unsigned)
-                branch_out <= (data_in1 < data_in2)? 1:0;
+                branch_out = (data_in1 < data_in2)? 1:0;
             `BGEU: // branch if greater than or equal (unsigned)
-                branch_out <= (data_in1 < data_in2)? 0:1;
+                branch_out = (data_in1 < data_in2)? 0:1;
         endcase
     end
     
