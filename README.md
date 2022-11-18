@@ -60,7 +60,7 @@ he data_mem.v module contains the data memory for the processor. Data memory is 
 2. Testbench (data_memmory_tb.v):
 When the read signal is low and reset (active low) is high, data is written into data memory at specified address byte-wise and the writing of byte-wise data is controlled by 4-bit write enable. The read is set, and stored data is read and verified. At locations 0x00100000, 0x00100004 and 0x00100008, when read signal is high and write enable, ‘we’ is 4’b0, the N- numbers of our team members is output in consecutive clock cycles.
 
-##Data Extender 
+## Data Extender 
 
 1. Design (data_extender.v)
 The data_ext.v depending on the type of load instruction being executed sign extends the incoming data bits of given length to 32-bits, using the MSB value of the incoming data bits. It is implemented with the help of a combinational MUX logic. Testing is done through data_ext_tb.v.
