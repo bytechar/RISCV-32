@@ -2,7 +2,7 @@
 `include "defines.vh"
 `default_nettype none
 
-module BranchComp(
+module branch_comp(
     input wire [2:0] branch_op,
     input wire [31:0] data_in1,
     input wire [31:0] data_in2,
