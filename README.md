@@ -5,7 +5,7 @@ Advanced Hardware Design Project
 - All design files inside Final_project --> Final_project.srcs --> sources_1
 - All testbench files inside Final_project --> Final_project.srcs --> sim_1
 - All simulation waveforms inside Final_project --> Simulation_output
-- All elaborated designs inside Final_project -- Elaborated_Design
+- All elaborated designs inside Final_project --> Elaborated_Design
 
 ## ALU
 1. Design (alu.v)
