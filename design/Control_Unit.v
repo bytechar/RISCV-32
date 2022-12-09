@@ -115,7 +115,7 @@ module Decoder
     output wire [4:0] rs1, rs2, rd,
     output reg [3:0] alu_select,
     output wire [2:0] bc_select, load_select,
-    output wire rd_en, rf_we, we, alu_inb_imm_select, alu_ina_pc_select, rd_din_pc_select
+    output wire rd_en, we, alu_inb_imm_select, alu_ina_pc_select, rd_din_pc_select
     //to be added
 );
     wire [6:0] top_opcode;
@@ -151,7 +151,7 @@ module Decoder
     assign rd_din_pc_select = is_JAL || is_JALR;
     
     // rf write enable
-    assign rf_we = !(is_BRANCH || is_STORE || is_SYSTEM);
+    //assign rf_we = !(is_BRANCH || is_STORE || is_SYSTEM);
     
     //data_memory rd-wr-enable
     assign we = is_STORE;
