@@ -3,9 +3,9 @@
 `default_nettype none
 
 module instruction_mem(
-    input wire clk,
+    input wire clk,rd,
     input wire [31:0] instr_addr,
-    output wire [31:0] instr
+    output reg [31:0] instr
     );
     
     //define instruction memory from 0x01000000 to 0x010007FF
@@ -13,15 +13,11 @@ module instruction_mem(
     
     //load instruction memory
     initial $readmemh("imem.mem", imem);
-    
-    reg [31:2] instr_addr_reg;
-    
+        
     always@(posedge clk)
     begin
-        instr_addr_reg <= instr_addr[31:2];
+        //memory is byte addressed, however only entire word can be accessed at a time
+        if(rd == 1) instr <= imem[instr_addr];
     end
-    
-    //memory is byte addressed, however only entire word can be accessed at a time
-    assign instr = imem[instr_addr_reg];
     
 endmodule
