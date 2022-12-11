@@ -17,7 +17,7 @@ module register_file(
     
     reg [4:0] rs1_addr_reg, rs2_addr_reg;
     
-    always@(posedge clk or negedge rst)
+    always@(posedge clk or negedge rstn)
     begin
     
         //update source register addresses
