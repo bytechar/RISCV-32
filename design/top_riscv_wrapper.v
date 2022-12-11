@@ -10,7 +10,7 @@ module top_riscv_wrapper
     );
 
 wire rstn;
-assign rstn = btnU;
+assign rstn = ~btnU;
 
 wire is_LUI, is_AUIPC, is_JAL, is_JALR, is_BRANCH, is_LOAD, is_STORE, is_IMM, is_ALU, is_FENCE, is_SYSTEM;
 wire is_SYSTEM_or_pc_halt;
