@@ -15,9 +15,8 @@ assign rstn = ~btnU;
 wire is_LUI, is_AUIPC, is_JAL, is_JALR, is_BRANCH, is_LOAD, is_STORE, is_IMM, is_ALU, is_FENCE, is_SYSTEM;
 wire is_SYSTEM_or_pc_halt;
 
-wire pc_we, pc_imm_en, imem_rd, imem_rd_and_not_halt, dmem_rd;
+wire pc_we, pc_imm_en, halt_from_pc, imem_rd, imem_rd_and_not_halt, rf_we, dmem_rd, branch_out;
 wire [3:0] dmem_we, decoder_dmem_we;
-wire pc_imm_en, halt_from_pc, branch_out;
 
 wire [31:0] instr_addr;
 wire [data_width - 1:0] instruction;
@@ -55,7 +54,7 @@ Control_Unit CONTROL(.clk(clk),
                      .dmem_we(dmem_we)
                      );
 
-assign pc_imm_en = is_JALR || is_JALR || branch_out ;
+assign pc_imm_en = is_JAL || is_JALR || branch_out ;
 
 program_counter PC(.clk(clk),
                    .rstn(rstn),
@@ -79,7 +78,7 @@ Decoder ID(.instruction(instruction),
            .rs2(rs2_addr),
            .rd(rd_addr),
            .alu_select(alu_select),
-           .bc_select(bc_select),
+           .bc_select(branch_select),
            .load_select(load_select),
            .we(decoder_dmem_we),
            .alu_inb_imm_select(alu_inb_imm_select),
@@ -122,7 +121,7 @@ assign alu_ina = alu_ina_pc_select ? instr_addr : rs1_dout;
 assign alu_inb = alu_inb_imm_select ? immediate : rs2_dout;
 
 ALU EX(.in_a(alu_ina),
-       .in_b(alu_ina),
+       .in_b(alu_inb),
        .alu_select(alu_select),
        .result(alu_out)
        );
