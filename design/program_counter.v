@@ -6,7 +6,7 @@ module program_counter(
     input wire clk,rstn,imm,we,
     input wire [31:0] imm_addr,
     output wire [31:0] instr_addr,
-    output wire halt
+    output reg halt
     );
     
 reg [31:2] instr_addr_temp;
@@ -17,7 +17,7 @@ begin
     //reset to start of instruction memory 0x01000000
     if(rstn==0)
     begin
-        instr_addr <= 32'h01000000;
+        instr_addr_temp <= 32'h01000000;
         halt <= 1'b0;
     end
     
