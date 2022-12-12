@@ -9,7 +9,7 @@ module Control_Unit(
     input wire rstn,
     
     // DECODER generated signals
-    input wire is_LUI, is_AUIPC, is_JAL, is_JALR, is_IMM, is_ALU,
+    //input wire is_LUI, is_AUIPC, is_JAL, is_JALR, is_IMM, is_ALU,
 
     input wire is_LOAD,
     input wire is_STORE,
@@ -73,8 +73,8 @@ module Control_Unit(
             end      
             // Memory Read Write
             MEM: begin                         // WB and update PC after MEM
-                if (is_LOAD)  dmem_rd = 1;
-                if (is_STORE)  dmem_we = decoder_dmem_we;
+                dmem_rd = 1;
+                if (is_STORE) dmem_we = decoder_dmem_we;
                 next_state = WB;
             end         
             // Write Back
