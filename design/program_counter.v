@@ -22,14 +22,16 @@ begin
     end
     
     //update PC only when we is enabled by control unit (IF stage)
-    else if(we==1)
-    begin
+    else begin
+        if(we==1) begin
     
-        //use immediate address generated outside PC if control signal imm is asserted
-        if(imm==1) instr_addr_temp <= imm_addr[31:2];
-        //regular counter increment (4 bytes)
-        else instr_addr_temp <= instr_addr[31:2] + 1;
-            
+            //use immediate address generated outside PC if control signal imm is asserted
+            if(imm==1) instr_addr_temp <= imm_addr[31:2];
+            //regular counter increment (4 bytes)
+            else instr_addr_temp <= instr_addr[31:2] + 1;
+        
+        end
+           
         //send halt signal if out-of-bounds value is reached (outside of defined instruction memory addresses)
         if (instr_addr_temp > 30'h010007FC/4 | instr_addr_temp < 30'h01000000/4) halt <= 1'b1;
         
