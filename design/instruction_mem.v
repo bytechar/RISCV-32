@@ -8,8 +8,8 @@ module instruction_mem(
     output reg [31:0] instr
     );
     
-    //define instruction memory from 0x01000000 to 0x010009FF
-    reg [31:0] imem [30'h01000000/4:30'h010009FC/4];
+    //define instruction memory from 0x01000000 to 0x01000FFF (4KByte memory)
+    reg [31:0] imem [30'h01000000/4:30'h01000FFC/4];
     
     //load instruction memory
     initial $readmemh("imem.mem", imem);
