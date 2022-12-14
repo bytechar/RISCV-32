@@ -17,7 +17,7 @@ begin
     //reset to start of instruction memory 0x01000000
     if(rstn==0)
     begin
-        instr_addr_temp <= 32'h01000000;
+        instr_addr_temp <= 30'h01000000/4;
         halt <= 1'b0;
     end
     
