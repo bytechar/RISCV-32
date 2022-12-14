@@ -6,7 +6,9 @@ module top_riscv_wrapper
     #(parameter data_width = 32)(
     input wire clk,btnU,
     input wire [15:0] sw,
-    output wire [15:0] led
+    output wire [15:0] led,
+    output wire [6:0] seg,
+    output wire [3:0] an
     );
 
 wire rstn;
@@ -14,6 +16,9 @@ assign rstn = ~btnU;
 
 wire is_LUI, is_AUIPC, is_JAL, is_JALR, is_BRANCH, is_LOAD, is_STORE, is_IMM, is_ALU, is_FENCE, is_SYSTEM;
 wire is_SYSTEM_or_pc_halt;
+
+assign seg = 7'h00;
+assign an = is_SYSTEM_or_pc_halt ? 4'hF : 4'h0;
 
 wire pc_we, pc_imm_en, halt_from_pc, imem_rd, imem_rd_and_not_halt, rf_we, dmem_rd, branch_out;
 wire [3:0] dmem_we, decoder_dmem_we;
@@ -48,7 +53,7 @@ Control_Unit CONTROL(.clk(clk),
                      .dmem_we(dmem_we)
                      );
 
-assign pc_imm_en = is_JAL || is_JALR || branch_out ;
+assign pc_imm_en = is_JAL || is_JALR || (is_BRANCH && branch_out) ;
 
 program_counter PC(.clk(clk),
                    .rstn(rstn),
