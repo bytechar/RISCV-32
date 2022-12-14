@@ -11,8 +11,8 @@ module Decoder
     output wire alu_inb_imm_select, alu_ina_pc_select, rd_din_pc_select,
     output wire signed [31:0] immediate,
     output wire is_LUI, is_AUIPC, is_JAL, is_JALR, is_BRANCH, is_LOAD, is_STORE, is_IMM, is_ALU, is_FENCE, is_SYSTEM
+    //to be added
 );
-    
     wire [6:0] top_opcode;
     wire [2:0] funct3;
     wire [6:0] funct7;
@@ -42,7 +42,7 @@ module Decoder
     assign bc_select = funct3;
     assign load_select = funct3;
     assign alu_inb_imm_select = is_LOAD || is_STORE || is_IMM || is_BRANCH || is_JALR || is_JAL || is_LUI || is_AUIPC;
-    assign alu_ina_pc_select = is_JAL || is_AUIPC;
+    assign alu_ina_pc_select = is_JAL || is_AUIPC || is_BRANCH;
     assign rd_din_pc_select = is_JAL || is_JALR;
     
     always@(*) begin
@@ -58,7 +58,8 @@ module Decoder
         //ALU op select
         case( is_LOAD || is_STORE || is_BRANCH || is_JALR || is_JAL || is_LUI || is_AUIPC || is_FENCE )
             1'b1 : alu_select = `ADD;
-            default: alu_select = {funct7[5],funct3};
+            default: alu_select = {(funct7[5] && ((funct3[0] && ~funct3[1]) || ~is_IMM)),funct3};
+                                   //pick funct7[5] ONLY when not IMM type OR SHIFT instruction           
         endcase
         
     end
