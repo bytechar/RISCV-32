@@ -9,7 +9,7 @@ module Control_Unit(
     input wire rstn,
     
     // DECODER generated signals
-    //input wire is_LUI, is_AUIPC, is_JAL, is_JALR, is_IMM, is_ALU,
+    // input wire is_LUI, is_AUIPC, is_JAL, is_JALR, is_IMM, is_ALU,
 
     input wire is_LOAD,
     input wire is_STORE,
@@ -51,16 +51,16 @@ module Control_Unit(
     // next state and output update
     always @(*) begin
     
-        imem_rd = 0;
-        pc_we = 0;
-        rf_we = 0;
-        dmem_rd = 0;
-        dmem_we = 4'd0;
+        imem_rd <= 0;
+        pc_we <= 0;
+        rf_we <= 0;
+        dmem_rd <= 0;
+        dmem_we <= 4'd0;
         
         case (state) 
             // Instruction Fetch
             IF: begin                          // Move to instruction decode and execute stage for all instruction types
-                imem_rd = 1;
+                imem_rd <= 1;
                 next_state = ID_EX;
             end  
             // Instruction Decode and Execution
@@ -73,15 +73,15 @@ module Control_Unit(
             end      
             // Memory Read Write
             MEM: begin                         // WB and update PC after MEM
-                dmem_rd = 1;
-                if (is_STORE) dmem_we = decoder_dmem_we;
+                dmem_rd <= 1;
+                if (is_STORE)  dmem_we <= decoder_dmem_we;
                 next_state = WB;
             end         
             // Write Back
             WB: begin                  // Always fetch instruction after PC is updated
-                pc_we = 1;
+                pc_we <= 1;
                 if (!(is_STORE | is_BRANCH | is_FENCE))  begin
-                    rf_we =1;
+                    rf_we <=1;
                 end
                 next_state = IF;
             end          
