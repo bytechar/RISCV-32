@@ -20,11 +20,11 @@ module branch_comp(
             `BLT: // Branch if less than (signed)
                 branch_output = ($signed(data_in1) < $signed(data_in2)) ? 1:0;
             `BGE: // branch if greater than or equal (signed)
-                branch_output = ($signed(data_in1) > $signed(data_in2)) ? 1:0;
+                branch_output = ($signed(data_in1) < $signed(data_in2)) ? 0:1;
             `BLTU: // branch if less than (unsigned)
                 branch_output = (data_in1 < data_in2)? 1:0;
             `BGEU: // branch if greater than or equal (unsigned)
-                branch_output = (data_in1 > data_in2)? 1:0;
+                branch_output = (data_in1 < data_in2)? 0:1;
              default: branch_output = 1'b0; 
         endcase
     end
