@@ -7,7 +7,7 @@
 
 // Relevant Address bits for 4KB Memory (0 - FFC -> 12 Bits)
 `define RAM_ADDR_BITS 12
-`define STARTING_ADDR_BIT 31
+`define STARTING_ADDR_BIT 32
 
 //Special ROM Values
 `define ROM_LENGTH 3
