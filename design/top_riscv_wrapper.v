@@ -15,12 +15,11 @@ wire rstn;
 assign rstn = ~btnU;
 
 wire is_LUI, is_AUIPC, is_JAL, is_JALR, is_BRANCH, is_LOAD, is_STORE, is_IMM, is_ALU, is_FENCE, is_SYSTEM;
-wire is_SYSTEM_or_pc_halt;
 
 assign seg = 7'h00;
-assign an = is_SYSTEM_or_pc_halt ? 4'hF : 4'h0;
+assign an = is_SYSTEM ? 4'hF : 4'h0;
 
-wire pc_we, pc_imm_en, halt_from_pc, imem_rd, imem_rd_and_not_halt, rf_we, dmem_rd, branch_out;
+wire pc_we, pc_imm_en, imem_rd, rf_we, dmem_rd, branch_out;
 wire [3:0] dmem_we, decoder_dmem_we;
 
 wire [31:0] instr_addr;
@@ -36,8 +35,6 @@ wire [4:0] rs1_addr, rs2_addr, rd_addr;
 wire [3:0] alu_select;
 wire [2:0] branch_select, load_select;
 
-assign is_SYSTEM_or_pc_halt = is_SYSTEM || halt_from_pc;
-
 Control_Unit CONTROL(.clk(clk),
                      .rstn(rstn),
                      .decoder_dmem_we(decoder_dmem_we),
@@ -45,7 +42,7 @@ Control_Unit CONTROL(.clk(clk),
                      .is_LOAD(is_LOAD),
                      .is_STORE(is_STORE),
                      .is_FENCE(is_FENCE),
-                     .is_SYSTEM(is_SYSTEM_or_pc_halt),
+                     .is_SYSTEM(is_SYSTEM),
                      .pc_we(pc_we),
                      .imem_rd(imem_rd),
                      .rf_we(rf_we),
@@ -60,14 +57,11 @@ program_counter PC(.clk(clk),
                    .imm(pc_imm_en),
                    .we(pc_we),
                    .imm_addr(alu_out),
-                   .instr_addr(instr_addr),
-                   .halt(halt_from_pc)
+                   .instr_addr(instr_addr)
                    );
 
-assign imem_rd_and_not_halt = imem_rd && ~halt_from_pc;
-
 instruction_mem IMEM(.clk(clk),
-                     .rd(imem_rd_and_not_halt),
+                     .rd(imem_rd),
                      .instr_addr(instr_addr),
                      .instr(instruction)
                      );
