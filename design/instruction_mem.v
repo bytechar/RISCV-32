@@ -9,15 +9,15 @@ module instruction_mem(
     );
     
     //define instruction memory from 0x01000000 to 0x01000FFF (4KByte memory)
-    reg [31:0] imem [30'h01000000/4:30'h01000FFC/4];
+    (*rom_style = "block" *) reg [31:0] imem ['h000/4:'hFFC/4];
     
     //load instruction memory
-    initial $readmemh("imem.mem", imem);
+    initial $readmemh("imem_int.mem", imem);
         
     always@(posedge clk)
     begin
         //memory is byte addressed, however only entire word can be accessed at a time
-        if(rd == 1) instr <= imem[instr_addr[31:2]];
+        if(rd) instr <= imem[instr_addr[11:2]];
     end
     
 endmodule
