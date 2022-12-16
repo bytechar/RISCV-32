@@ -5,7 +5,7 @@ SYMBOL TABLE:
 01000000 l    d  .text	00000000 .text
 80000000 l    d  .data	00000000 .data
 80000000 l    d  .bss	00000000 .bss
-80003c00 l    d  .stack	00000000 .stack
+80000c00 l    d  .stack	00000000 .stack
 00000000 l    d  .riscv.attributes	00000000 .riscv.attributes
 00000000 l    df *ABS*	00000000 main.o
 01000010 l       .text	00000000 spot1
@@ -16,10 +16,10 @@ SYMBOL TABLE:
 01000028 l       .text	00000000 spot6
 0100003c l       .text	00000000 spot7
 01000044 l       .text	00000000 end
-010000d0 l       .text	00000000 pc_update
-010000cc l       .text	00000000 halt
+010000d8 l       .text	00000000 pc_update
+010000d4 l       .text	00000000 halt
 01000000 g     F .text	00000000 reset_handler
-010000d4 g       .text	00000000 _sidata
+010000dc g       .text	00000000 _sidata
 80000000 g       .bss	00000000 _sbss
 00000400 g       *ABS*	00000000 __stack_size
 80000000 g       .data	00000000 _sdata
@@ -70,37 +70,39 @@ Disassembly of section .text:
  1000050:	fff04193          	not	gp,zero
  1000054:	00349133          	sll	sp,s1,gp
  1000058:	00b15193          	srli	gp,sp,0xb
- 100005c:	70a06513          	ori	a0,zero,1802
- 1000060:	00a12823          	sw	a0,16(sp)
- 1000064:	01012583          	lw	a1,16(sp)
- 1000068:	00b18a23          	sb	a1,20(gp)
- 100006c:	00b1aa23          	sw	a1,20(gp)
+ 100005c:	07baf537          	lui	a0,0x7baf
+ 1000060:	7ba56513          	ori	a0,a0,1978
+ 1000064:	00a12823          	sw	a0,16(sp)
+ 1000068:	01012583          	lw	a1,16(sp)
+ 100006c:	00b18a23          	sb	a1,20(gp)
  1000070:	00b11a23          	sh	a1,20(sp)
- 1000074:	01412983          	lw	s3,20(sp)
- 1000078:	01415c03          	lhu	s8,20(sp)
- 100007c:	01414f83          	lbu	t6,20(sp)
- 1000080:	01fc4633          	xor	a2,s8,t6
- 1000084:	002f9f93          	slli	t6,t6,0x2
- 1000088:	009fdfb3          	srl	t6,t6,s1
- 100008c:	01411a83          	lh	s5,20(sp)
- 1000090:	01410d83          	lb	s11,20(sp)
- 1000094:	409adb33          	sra	s6,s5,s1
- 1000098:	009b6b33          	or	s6,s6,s1
- 100009c:	0159a0b3          	slt	ra,s3,s5
- 10000a0:	01bab133          	sltu	sp,s5,s11
- 10000a4:	409004b3          	neg	s1,s1
- 10000a8:	00f4f493          	andi	s1,s1,15
- 10000ac:	4014d493          	srai	s1,s1,0x1
- 10000b0:	0101a583          	lw	a1,16(gp)
- 10000b4:	00b1aa23          	sw	a1,20(gp)
- 10000b8:	000f4097          	auipc	ra,0xf4
- 10000bc:	00a58a63          	beq	a1,a0,10000d0 <pc_update>
- 10000c0:	00959663          	bne	a1,s1,10000cc <halt>
- 10000c4:	0ff0000f          	fence
- 10000c8:	00000073          	ecall
+ 1000074:	00b1aa23          	sw	a1,20(gp)
+ 1000078:	01412983          	lw	s3,20(sp)
+ 100007c:	01415c03          	lhu	s8,20(sp)
+ 1000080:	01414f83          	lbu	t6,20(sp)
+ 1000084:	01fc4633          	xor	a2,s8,t6
+ 1000088:	002f9f93          	slli	t6,t6,0x2
+ 100008c:	009fdfb3          	srl	t6,t6,s1
+ 1000090:	01411a83          	lh	s5,20(sp)
+ 1000094:	01410d83          	lb	s11,20(sp)
+ 1000098:	409adb33          	sra	s6,s5,s1
+ 100009c:	009b6b33          	or	s6,s6,s1
+ 10000a0:	0159a0b3          	slt	ra,s3,s5
+ 10000a4:	01bab133          	sltu	sp,s5,s11
+ 10000a8:	409004b3          	neg	s1,s1
+ 10000ac:	00f4f493          	andi	s1,s1,15
+ 10000b0:	4014d493          	srai	s1,s1,0x1
+ 10000b4:	0101a583          	lw	a1,16(gp)
+ 10000b8:	00b1aa23          	sw	a1,20(gp)
+ 10000bc:	000f4097          	auipc	ra,0xf4
+ 10000c0:	70a06513          	ori	a0,zero,1802
+ 10000c4:	00a58a63          	beq	a1,a0,10000d8 <pc_update>
+ 10000c8:	00959663          	bne	a1,s1,10000d4 <halt>
+ 10000cc:	0ff0000f          	fence
+ 10000d0:	00000073          	ecall
 
-010000cc <halt>:
- 10000cc:	00100073          	ebreak
+010000d4 <halt>:
+ 10000d4:	00100073          	ebreak
 
-010000d0 <pc_update>:
- 10000d0:	000084e7          	jalr	s1,ra # 10f40b8 <_sidata+0xf3fe4>
+010000d8 <pc_update>:
+ 10000d8:	000084e7          	jalr	s1,ra # 10f40bc <_sidata+0xf3fe0>
