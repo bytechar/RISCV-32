@@ -9,7 +9,7 @@ module instruction_mem(
     );
         
     //define instruction memory from 0x01000000 to 0x01000FFF (4KByte memory)
-    (*rom_style = "block" *) reg [31:0] imem [10'h000/4:10'hFFC/4];
+    (*rom_style = "block" *) reg [31:0] imem [10'h000:10'h3FF];
     
     //load instruction memory
     initial $readmemh("imem_int.mem", imem);
