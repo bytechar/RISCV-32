@@ -2,14 +2,14 @@
 
 module register_file_tb();
     
-reg clk,rst,we;
+reg clk,rstn,we;
 reg [4:0] rs1_addr, rs2_addr, rd_addr;
 reg [31:0] rd_din;
 wire [31:0] rs1_dout, rs2_dout;
 
 register_file regfile1(
         .clk(clk),
-        .rst(rst),
+        .rstn(rstn),
         .we(we),
         .rs1_addr(rs1_addr),
         .rs2_addr(rs2_addr),
@@ -19,10 +19,13 @@ register_file regfile1(
         .rd_din(rd_din)
 );
 
-reg rst_f,we_f;
+reg rstn_f,we_f;
 reg [4:0] rs1_addr_f, rs2_addr_f, rd_addr_f;
 reg [31:0] rd_din_f, rs1_dout_f, rs2_dout_f;
 integer file_test_cases;
+
+parameter clock_period=15;
+always #(clock_period/2) clk=~clk;
 
 initial begin: REGISTER_FILE
 
@@ -47,21 +50,18 @@ initial begin: REGISTER_FILE
             $stop;
         end   
         
-        #5;    
+        #(clock_period/4);
  
-        $fscanf(file_test_cases,"%b,%b,%d,%d,%d,%h,%h,%h",rst_f,we_f,rs1_addr_f,rs2_addr_f,rd_addr_f,rd_din_f,rs1_dout_f,rs2_dout_f);
+        $fscanf(file_test_cases,"%b,%b,%d,%d,%d,%h,%h,%h",rstn_f,we_f,rs1_addr_f,rs2_addr_f,rd_addr_f,rd_din_f,rs1_dout_f,rs2_dout_f);
  
-        rst = rst_f;
+        rstn = rstn_f;
         we = we_f;
         rs1_addr = rs1_addr_f;
         rs2_addr = rs2_addr_f;
         rd_addr = rd_addr_f;
         rd_din = rd_din_f;     
 
-        #5;
-        clk = 1;
-        #10;
-        clk = 0;        
+        #(clock_period*3/4);                    
              
     end
     
