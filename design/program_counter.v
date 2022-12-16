@@ -9,7 +9,7 @@ module program_counter(
     output reg halt
     );
     
-reg [31:2] instr_addr_temp;
+reg [31:2] instr_addr_temp, instr_addr_reg;
 
 always@(posedge clk or negedge rstn)
 begin
@@ -17,7 +17,7 @@ begin
     //reset to start of instruction memory 0x01000000
     if(rstn==0)
     begin
-        instr_addr_temp <= 30'h01000000/4;
+        instr_addr_reg <= 30'h01000000/4;
         halt <= 1'b0;
     end    
     
@@ -26,17 +26,20 @@ begin
         if(we==1) begin
     
             //use immediate address generated outside PC if control signal imm is asserted
-            if(imm==1) instr_addr_temp <= imm_addr[31:2];
+            if(imm==1) instr_addr_temp = imm_addr[31:2];
             //regular counter increment (4 bytes)
-            else instr_addr_temp <= instr_addr[31:2] + 1;
+            else instr_addr_temp = instr_addr[31:2] + 1;
             
          //send halt signal if out-of-bounds value is reached (outside of defined instruction memory addresses)
          if (instr_addr_temp > 30'h01000FFC/4 | instr_addr_temp < 30'h01000000/4) halt <= 1'b1;
+         
+         //register instruction address
+         instr_addr_reg <= instr_addr_temp;
         
         end
     end
 end
 
-assign instr_addr = {instr_addr_temp,2'b00};
+    assign instr_addr = {instr_addr_reg,2'b00};
     
 endmodule
