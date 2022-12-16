@@ -49,9 +49,9 @@ module Decoder
     
         //data memory wr-enable
         case(funct3)
-            3'b000 : we = 4'b0001; 
-            3'b001 : we = 4'b0011;
-            3'b010 : we = 4'b1111;
+               `SB : we = 4'b0001; 
+               `SH : we = 4'b0011;
+               `SW : we = 4'b1111;
             default: we = 4'b0000;
         endcase
         
