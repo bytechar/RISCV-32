@@ -37,12 +37,13 @@ sltiu x6, x9, -2
 xori x3, x0, -1
 sll x2, x9, x3			//data memory base address
 srli x3, x2, 11			//memory mapped I/O base address
-ori x10, x0, 0x70a
+lui x10, 0x07baf
+ori x10, x10, 0x7ba
 sw x10, 16(x2)			//write to memory
 lw x11, 16(x2)			//read memory
 sb x11, 20(x3)			//write to LEDs
-sw x11, 20(x3)
 sh x11, 20(x2)			//write to memory
+sw x11, 20(x3)
 lw x19, 20(x2)
 lhu x24, 20(x2)
 lbu x31, 20(x2)
@@ -61,6 +62,7 @@ srai x9, x9, 1
 lw x11, 16(x3)			//read switches
 sw x11, 20(x3)			//write to LEDs
 auipc x1, 0x000f4
+ori x10, x0, 0x70a
 beq x11, x10, pc_update		//x11 = 0x70a
 bne x11, x9, halt		//x11 != 0x7
 fence
