@@ -2,14 +2,17 @@
 `include "defines.vh"
 `default_nettype none
 
+// Instruction Memory Size (4KB or 1024 Words)
+`define MEM_LENGTH_WORDS 1024
+
 module instruction_mem(
     input wire clk,rd,
     input wire [31:0] instr_addr,
     output reg [31:0] instr
     );
         
-    //define instruction memory from 0x01000000 to 0x01000FFF (4KByte memory)
-    (*rom_style = "block" *) reg [31:0] imem [10'h000:10'h3FF];
+    //define instruction memory (4KByte memory)
+    (*rom_style = "block" *) reg [31:0] imem [0:`MEM_LENGTH_WORDS-1];
     
     //load instruction memory
     initial $readmemh("imem_int.mem", imem);
