@@ -6,10 +6,14 @@ Group_5
 2. Naman Sharma(ns5273)
 3. Vidyut Singh(vps4038)
 
-- All design files inside Final_project --> Final_project.srcs --> sources_1
-- All testbench files inside Final_project --> Final_project.srcs --> sim_1
+- All design files inside RISCV_project.srcs > sources_1 > new
+- All testbench files inside RISCV_project.srcs > sim_1
 - All simulation waveforms inside Final_project --> Simulation_output
 - All elaborated designs inside Final_project --> Elaborated_Design
+- All mem files inside RISCV_project.srcs > sources_1 > imports
+- FSM control and Top Level Integration schematics inside Schematics
+
+![Integration](https://github.com/naman-47/RISCV-32I-AHD/blob/main/Integration.drawio.png)
 
 ## ALU
 1. Design (alu.v)
