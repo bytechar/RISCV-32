@@ -1,0 +1,84 @@
+
+main.elf:     file format elf32-littleriscv
+
+SYMBOL TABLE:
+01000000 l    d  .text	00000000 .text
+80000000 l    d  .data	00000000 .data
+80000000 l    d  .bss	00000000 .bss
+80000c00 l    d  .stack	00000000 .stack
+00000000 l    d  .riscv.attributes	00000000 .riscv.attributes
+00000000 l    df *ABS*	00000000 main.o
+0100001c l       .text	00000000 continue
+01000028 l       .text	00000000 oddn1
+01000034 l       .text	00000000 oddn2
+01000038 l       .text	00000000 loopi
+0100004c l       .text	00000000 pos
+01000054 l       .text	00000000 loopj
+0100005c l       .text	00000000 loopk
+01000080 l       .text	00000000 endi
+01000000 g     F .text	00000000 reset_handler
+01000094 g       .text	00000000 _sidata
+80000000 g       .bss	00000000 _sbss
+00000400 g       *ABS*	00000000 __stack_size
+80000000 g       .data	00000000 _sdata
+80000000 g       .bss	00000000 _ebss
+80000000 g       .data	00000000 _edata
+
+
+
+Disassembly of section .text:
+
+01000000 <reset_handler>:
+ 1000000:	000383b3          	add	t2,t2,zero
+ 1000004:	ffd00293          	li	t0,-3
+ 1000008:	01400313          	li	t1,20
+ 100000c:	00500933          	add	s2,zero,t0
+ 1000010:	0062c663          	blt	t0,t1,100001c <continue>
+ 1000014:	00600933          	add	s2,zero,t1
+ 1000018:	00500333          	add	t1,zero,t0
+
+0100001c <continue>:
+ 100001c:	00197493          	andi	s1,s2,1
+ 1000020:	00049463          	bnez	s1,1000028 <oddn1>
+ 1000024:	00190913          	addi	s2,s2,1
+
+01000028 <oddn1>:
+ 1000028:	00137513          	andi	a0,t1,1
+ 100002c:	00051463          	bnez	a0,1000034 <oddn2>
+ 1000030:	fff30313          	addi	t1,t1,-1
+
+01000034 <oddn2>:
+ 1000034:	00130313          	addi	t1,t1,1
+
+01000038 <loopi>:
+ 1000038:	00100a13          	li	s4,1
+ 100003c:	00090ab3          	add	s5,s2,zero
+ 1000040:	00095663          	bgez	s2,100004c <pos>
+ 1000044:	41500ab3          	neg	s5,s5
+ 1000048:	fff00a13          	li	s4,-1
+
+0100004c <pos>:
+ 100004c:	00300f93          	li	t6,3
+ 1000050:	00000f33          	add	t5,zero,zero
+
+01000054 <loopj>:
+ 1000054:	000efe93          	andi	t4,t4,0
+ 1000058:	000e7e13          	andi	t3,t3,0
+
+0100005c <loopk>:
+ 100005c:	014e0e33          	add	t3,t3,s4
+ 1000060:	001e8e93          	addi	t4,t4,1
+ 1000064:	ff5ecce3          	blt	t4,s5,100005c <loopk>
+ 1000068:	000e0a13          	mv	s4,t3
+ 100006c:	ffff8f93          	addi	t6,t6,-1
+ 1000070:	ffef92e3          	bne	t6,t5,1000054 <loopj>
+ 1000074:	014383b3          	add	t2,t2,s4
+ 1000078:	00290913          	addi	s2,s2,2
+ 100007c:	fa694ee3          	blt	s2,t1,1000038 <loopi>
+
+01000080 <endi>:
+ 1000080:	00100137          	lui	sp,0x100
+ 1000084:	00512a23          	sw	t0,20(sp) # 100014 <__stack_size+0xffc14>
+ 1000088:	00612a23          	sw	t1,20(sp)
+ 100008c:	00712a23          	sw	t2,20(sp)
+ 1000090:	00000073          	ecall
