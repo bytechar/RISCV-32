@@ -14,31 +14,31 @@ module top_riscv_wrapper
 wire rstn;
 assign rstn = ~btnU;
 
-wire is_LUI, is_AUIPC, is_JAL, is_JALR, is_BRANCH, is_LOAD, is_STORE, is_IMM, is_ALU, is_FENCE, is_SYSTEM;
-wire is_SYSTEM_or_pc_halt;
+(* keep = "true" *) wire is_LUI, is_AUIPC, is_JAL, is_JALR, is_BRANCH, is_LOAD, is_STORE, is_IMM, is_ALU, is_FENCE, is_SYSTEM;
+(* keep = "true" *) wire is_SYSTEM_or_pc_halt;
+
+(* keep = "true" *) wire pc_we, pc_imm_en, halt_from_pc, imem_rd, imem_rd_and_not_halt, rf_we, dmem_rd, branch_out;
+(* keep = "true" *) wire [3:0] dmem_we, decoder_dmem_we;
+
+(* keep = "true" *) wire [31:0] instr_addr;
+(* keep = "true" *) wire [data_width - 1:0] instruction;
+
+(* keep = "true" *) wire [31:0] immediate, rs1_dout, rs2_dout, rd_din;
+(* keep = "true" *) wire [31:0] alu_ina, alu_inb, alu_out;
+(* keep = "true" *) wire [31:0] dmem_out;
+
+(* keep = "true" *) wire alu_inb_imm_select, alu_ina_pc_select, rd_din_pc_select;
+
+(* keep = "true" *) wire [4:0] rs1_addr, rs2_addr, rd_addr;
+(* keep = "true" *) wire [3:0] alu_select;
+(* keep = "true" *) wire [2:0] branch_select, load_select;
+
+assign is_SYSTEM_or_pc_halt = is_SYSTEM || halt_from_pc;
 
 assign seg = 7'h00;
 assign an = is_SYSTEM_or_pc_halt ? 4'hF : 4'h0;
 
-wire pc_we, pc_imm_en, halt_from_pc, imem_rd, imem_rd_and_not_halt, rf_we, dmem_rd, branch_out;
-wire [3:0] dmem_we, decoder_dmem_we;
-
-wire [31:0] instr_addr;
-wire [data_width - 1:0] instruction;
-
-wire [31:0] immediate, rs1_dout, rs2_dout, rd_din;
-wire [31:0] alu_ina, alu_inb, alu_out;
-wire [31:0] dmem_out;
-
-wire alu_inb_imm_select, alu_ina_pc_select, rd_din_pc_select;
-
-wire [4:0] rs1_addr, rs2_addr, rd_addr;
-wire [3:0] alu_select;
-wire [2:0] branch_select, load_select;
-
-assign is_SYSTEM_or_pc_halt = is_SYSTEM || halt_from_pc;
-
-Control_Unit CONTROL(.clk(clk),
+(* keep_hierarchy = "yes" *) Control_Unit CONTROL(.clk(clk),
                      .rstn(rstn),
                      .decoder_dmem_we(decoder_dmem_we),
                      .is_BRANCH(is_BRANCH),
@@ -55,7 +55,7 @@ Control_Unit CONTROL(.clk(clk),
 
 assign pc_imm_en = is_JAL || is_JALR || (is_BRANCH && branch_out) ;
 
-program_counter PC(.clk(clk),
+(* keep_hierarchy = "yes" *) program_counter PC(.clk(clk),
                    .rstn(rstn),
                    .imm(pc_imm_en),
                    .we(pc_we),
@@ -66,13 +66,13 @@ program_counter PC(.clk(clk),
                    
 assign imem_rd_and_not_halt = imem_rd && ~halt_from_pc;
 
-instruction_mem IMEM(.clk(clk),
+(* keep_hierarchy = "yes" *) instruction_mem IMEM(.clk(clk),
                      .rd(imem_rd_and_not_halt),
                      .instr_addr(instr_addr),
                      .instr(instruction)
                      );
 
-Decoder ID(.instruction(instruction),
+(* keep_hierarchy = "yes" *) Decoder ID(.instruction(instruction),
            .rs1(rs1_addr),
            .rs2(rs2_addr),
            .rd(rd_addr),
@@ -99,7 +99,7 @@ Decoder ID(.instruction(instruction),
 
 assign rd_din = rd_din_pc_select ? (instr_addr+4) : ( is_LOAD ? dmem_out : alu_out );
 
-register_file RF(.clk(clk),
+(* keep_hierarchy = "yes" *) register_file RF(.clk(clk),
                  .rstn(rstn),
                  .we(rf_we),
                  .rs1_addr(rs1_addr),
@@ -110,7 +110,7 @@ register_file RF(.clk(clk),
                  .rs2_dout(rs2_dout)
                  );
 
-branch_comp BC(.branch_op(branch_select),
+(* keep_hierarchy = "yes" *) branch_comp BC(.branch_op(branch_select),
                .data_in1(rs1_dout),
                .data_in2(rs2_dout),
                .branch_out(branch_out)
@@ -119,13 +119,13 @@ branch_comp BC(.branch_op(branch_select),
 assign alu_ina = alu_ina_pc_select ? instr_addr : rs1_dout;
 assign alu_inb = alu_inb_imm_select ? immediate : rs2_dout;
 
-ALU EX(.in_a(alu_ina),
+(* keep_hierarchy = "yes" *) ALU EX(.in_a(alu_ina),
        .in_b(alu_inb),
        .alu_select(alu_select),
        .result(alu_out)
        );
 
-DMem DMEM(.clk(clk),
+(* keep_hierarchy = "yes" *) DMem DMEM(.clk(clk),
           .rstn(rstn),
           .rd(dmem_rd),
           .we(dmem_we),
