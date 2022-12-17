@@ -1,0 +1,39 @@
+
+main.elf:     file format elf32-littleriscv
+
+SYMBOL TABLE:
+01000000 l    d  .text	00000000 .text
+80000000 l    d  .data	00000000 .data
+80000000 l    d  .bss	00000000 .bss
+80000c00 l    d  .stack	00000000 .stack
+00000000 l    d  .riscv.attributes	00000000 .riscv.attributes
+00000000 l    df *ABS*	00000000 main.o
+01000000 g     F .text	00000000 reset_handler
+01000040 g       .text	00000000 _sidata
+80000000 g       .bss	00000000 _sbss
+00000400 g       *ABS*	00000000 __stack_size
+80000000 g       .data	00000000 _sdata
+80000000 g       .bss	00000000 _ebss
+80000000 g       .data	00000000 _edata
+
+
+
+Disassembly of section .text:
+
+01000000 <reset_handler>:
+ 1000000:	00106493          	ori	s1,zero,1
+ 1000004:	ffe4a293          	slti	t0,s1,-2
+ 1000008:	ffe4b313          	sltiu	t1,s1,-2
+ 100000c:	fff04193          	not	gp,zero
+ 1000010:	00349133          	sll	sp,s1,gp
+ 1000014:	00b15193          	srli	gp,sp,0xb
+ 1000018:	07baf537          	lui	a0,0x7baf
+ 100001c:	3af56593          	ori	a1,a0,943
+ 1000020:	00b18a23          	sb	a1,20(gp)
+ 1000024:	00b11a23          	sh	a1,20(sp)
+ 1000028:	00b1aa23          	sw	a1,20(gp)
+ 100002c:	00f07493          	andi	s1,zero,15
+ 1000030:	0091aa23          	sw	s1,20(gp)
+ 1000034:	0101a583          	lw	a1,16(gp)
+ 1000038:	00b1aa23          	sw	a1,20(gp)
+ 100003c:	00100073          	ebreak
