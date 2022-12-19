@@ -50,7 +50,7 @@ module alu_tb();
         end
     
     while(!$feof(test_fp)) begin
-        $fscanf(test_fp, "%h %h %h %h\n", t_in_a, t_in_b, t_alu_select, t_result);
+        $fscanf(test_fp, "%h %h %h %h\n", t_in_a, t_in_b, t_alu_select, exp_result);
         t_cnt = t_cnt + 1;
         #5
         if(exp_result == t_result) begin
