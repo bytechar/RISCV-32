@@ -11,11 +11,19 @@ module instruction_mem(
     output reg [31:0] instr
     );
         
-    //define instruction memory (4KByte memory)
+    //define instruction memory from 0x01000000 to 0x01000FFF (4KByte memory)
     (*rom_style = "block" *) reg [31:0] imem [0:`MEM_LENGTH_WORDS-1];
     
     //load instruction memory
     initial $readmemh("imem_int.mem", imem);
+    //initial $readmemh("imem_int2.mem", imem);
+    //initial $readmemh("binary_search_1.mem", imem);
+    //initial $readmemh("binary_search_2.mem", imem);
+    //initial $readmemh("cubes_positive.mem", imem);
+    //initial $readmemh("cubes_negative.mem", imem);
+    //initial $readmemh("rc5.mem", imem);
+    //initial $readmemh("rc5_complex.mem", imem);
+
         
     always@(posedge clk)
     begin
