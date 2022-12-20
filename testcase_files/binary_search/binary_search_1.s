@@ -10,6 +10,8 @@
 
 reset_handler:
 lui a3, 0x80000
+lui a5, 0x00100
+sw x0, 20(a5)
 addi a0,x0,1
 sw a0,0(a3)
 addi a0,x0,3
@@ -35,7 +37,8 @@ sw a0,40(a3)
 #Set a0 register as address of first element of arr[]
 add a0,x0,a3
 #value of key : element to be searched
-addi a1,x0,8
+lw a1, 16(a5)	# Read from switches
+sw a1, 20(a5)	# Display address offset on leds
 #Store size of the arr[] in a2
 addi a2,x0,11
 #Start the Binary Search
@@ -63,6 +66,12 @@ LOOP2:
 FOUND:
  # If we get here, then key == arr[mid]
  slli sp, t0, 2 # Scale the midpoint by 4
+ add sp, sp, a3
  lw ra, 0(sp)
+ sw t0, 20(a5)	# Display address offset on leds
+ jal zero, END
 HALT:
+ addi a6, x0, -1
+ sw a6, 20(a5)
+END:
  ecall
