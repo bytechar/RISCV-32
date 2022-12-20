@@ -1,0 +1,291 @@
+/*
+ * Standalone assembly language program for NYU-6463-RV32I processor
+ * The label 'reset handler' will be called upon startup.
+ */
+.global reset_handler
+.type reset_handler,@function
+
+reset_handler:
+	lui	sp,0x80000
+        addi    sp,sp,0x7fc
+
+	lui	t0,0x00100
+
+        addi    sp,sp,-208
+        sw      s0,200(sp)
+        addi    s0,sp,208
+
+        li      a5,12
+        sw      a5,-32(s0)
+        addi    a5,s0,-180
+        li      a4,128
+        mv      a2,a4
+        li      a1,0
+        mv      a0,a5
+
+        li      a5,1190719488
+        addi    a5,a5,-1851
+        sw      a5,-172(s0)
+        li      a5,1175216128
+        addi    a5,a5,133
+        sw      a5,-168(s0)
+        li      a5,1895317504
+        addi    a5,a5,-1142
+        sw      a5,-164(s0)
+        li      a5,676036608
+        addi    a5,a5,771
+        sw      a5,-160(s0)
+        li      a5,1363021824
+        addi    a5,a5,1108
+        sw      a5,-156(s0)
+        li      a5,-165548032
+        addi    a5,a5,-734
+        sw      a5,-152(s0)
+        li      a5,824508416
+        addi    a5,a5,1629
+        sw      a5,-148(s0)
+        li      a5,296239104
+        addi    a5,a5,-1443
+        sw      a5,-144(s0)
+        li      a5,-735612928
+        addi    a5,a5,-1941
+        sw      a5,-140(s0)
+        li      a5,1899683840
+        addi    a5,a5,-2003
+        sw      a5,-136(s0)
+        li      a5,1266233344
+        addi    a5,a5,-103
+        sw      a5,-132(s0)
+        li      a5,664379392
+        addi    a5,a5,1245
+        sw      a5,-128(s0)
+        li      a5,-1483726848
+        addi    a5,a5,-951
+        sw      a5,-124(s0)
+        li      a5,-555843584
+        addi    a5,a5,1818
+        sw      a5,-120(s0)
+        li      a5,918564864
+        addi    a5,a5,406
+        sw      a5,-116(s0)
+        li      a5,-1477459968
+        addi    a5,a5,585
+        sw      a5,-112(s0)
+        li      a5,1638371328
+        addi    a5,a5,-1096
+        sw      a5,-108(s0)
+        li      a5,990519296
+        addi    a5,a5,-725
+        sw      a5,-104(s0)
+        li      a5,1304416256
+        addi    a5,a5,-1418
+        sw      a5,-100(s0)
+        li      a5,-1374281728
+        addi    a5,a5,359
+        sw      a5,-96(s0)
+        li      a5,819425280
+        addi    a5,a5,-1270
+        sw      a5,-92(s0)
+        li      a5,1125720064
+        addi    a5,a5,772
+        sw      a5,-88(s0)
+        li      a5,-154398720
+        addi    a5,a5,1073
+        sw      a5,-84(s0)
+        li      a5,1694785536
+        addi    a5,a5,896
+        sw      a5,-80(s0)
+        sw      zero,-24(s0)
+        sw      zero,-28(s0)
+        sw      zero,-20(s0)
+        li      a5,1
+        sw      a5,-188(s0)
+
+	sw	a5,20(t0)
+	srli	t1,a5,16
+	sw	t1,20(t0)
+
+        li      a5,1
+        sw      a5,-184(s0)
+
+	sw	a5,20(t0)
+	srli	t1,a5,16
+	sw	t1,20(t0)
+
+        sw      zero,-204(s0)
+        sw      zero,-200(s0)
+        lw      a5,-188(s0)
+        sw      a5,-24(s0)
+        lw      a5,-184(s0)
+        sw      a5,-28(s0)
+        li      a5,1
+        sw      a5,-20(s0)
+        j       .L2
+.L3:
+        lw      a5,-20(s0)
+        slli    a5,a5,1
+        sw      a5,-36(s0)
+        lw      a5,-28(s0)
+        andi    a5,a5,31
+        sw      a5,-48(s0)
+        li      a4,32
+        lw      a5,-48(s0)
+        sub     a5,a4,a5
+        sw      a5,-52(s0)
+        lw      a4,-24(s0)
+        lw      a5,-28(s0)
+        xor     a4,a4,a5
+        lw      a5,-48(s0)
+        sll     a4,a4,a5
+        lw      a3,-24(s0)
+        lw      a5,-28(s0)
+        xor     a3,a3,a5
+        lw      a5,-52(s0)
+        srl     a5,a3,a5
+        or      a4,a4,a5
+        lw      a5,-36(s0)
+        slli    a5,a5,2
+        addi    a5,a5,-16
+        add     a5,a5,s0
+        lw      a5,-164(a5)
+        add     a5,a4,a5
+        sw      a5,-24(s0)
+        lw      a5,-24(s0)
+        andi    a5,a5,31
+        sw      a5,-48(s0)
+        li      a4,32
+        lw      a5,-48(s0)
+        sub     a5,a4,a5
+        sw      a5,-52(s0)
+        lw      a4,-24(s0)
+        lw      a5,-28(s0)
+        xor     a4,a4,a5
+        lw      a5,-48(s0)
+        sll     a4,a4,a5
+        lw      a3,-24(s0)
+        lw      a5,-28(s0)
+        xor     a3,a3,a5
+        lw      a5,-52(s0)
+        srl     a5,a3,a5
+        or      a4,a4,a5
+        lw      a5,-36(s0)
+        addi    a5,a5,1
+        slli    a5,a5,2
+        addi    a5,a5,-16
+        add     a5,a5,s0
+        lw      a5,-164(a5)
+        add     a5,a4,a5
+        sw      a5,-28(s0)
+        lw      a5,-20(s0)
+        addi    a5,a5,1
+        sw      a5,-20(s0)
+.L2:
+        lw      a4,-20(s0)
+        lw      a5,-32(s0)
+        bleu    a4,a5,.L3
+        lw      a5,-24(s0)
+        sw      a5,-204(s0)
+
+	sw	a5,20(t0)
+	srli	t1,a5,16
+	sw	t1,20(t0)
+
+        lw      a5,-28(s0)
+        sw      a5,-200(s0)
+
+	sw	a5,20(t0)
+	srli	t1,a5,16
+	sw	t1,20(t0)
+
+        lw      a5,-32(s0)
+        sw      a5,-20(s0)
+        j       .L4
+.L5:
+        lw      a5,-20(s0)
+        slli    a5,a5,1
+        sw      a5,-36(s0)
+        lw      a5,-24(s0)
+        andi    a5,a5,31
+        sw      a5,-40(s0)
+        li      a4,32
+        lw      a5,-40(s0)
+        sub     a5,a4,a5
+        sw      a5,-44(s0)
+        lw      a5,-36(s0)
+        addi    a5,a5,1
+        slli    a5,a5,2
+        addi    a5,a5,-16
+        add     a5,a5,s0
+        lw      a5,-164(a5)
+        lw      a4,-28(s0)
+        sub     a4,a4,a5
+        lw      a5,-40(s0)
+        srl     a4,a4,a5
+        lw      a5,-36(s0)
+        addi    a5,a5,1
+        slli    a5,a5,2
+        addi    a5,a5,-16
+        add     a5,a5,s0
+        lw      a5,-164(a5)
+        lw      a3,-28(s0)
+        sub     a3,a3,a5
+        lw      a5,-44(s0)
+        sll     a5,a3,a5
+        or      a5,a4,a5
+        lw      a4,-24(s0)
+        xor     a5,a4,a5
+        sw      a5,-28(s0)
+        lw      a5,-28(s0)
+        andi    a5,a5,31
+        sw      a5,-40(s0)
+        li      a4,32
+        lw      a5,-40(s0)
+        sub     a5,a4,a5
+        sw      a5,-44(s0)
+        lw      a5,-36(s0)
+        slli    a5,a5,2
+        addi    a5,a5,-16
+        add     a5,a5,s0
+        lw      a5,-164(a5)
+        lw      a4,-24(s0)
+        sub     a4,a4,a5
+        lw      a5,-40(s0)
+        srl     a4,a4,a5
+        lw      a5,-36(s0)
+        slli    a5,a5,2
+        addi    a5,a5,-16
+        add     a5,a5,s0
+        lw      a5,-164(a5)
+        lw      a3,-24(s0)
+        sub     a3,a3,a5
+        lw      a5,-44(s0)
+        sll     a5,a3,a5
+        or      a5,a4,a5
+        lw      a4,-28(s0)
+        xor     a5,a4,a5
+        sw      a5,-24(s0)
+        lw      a5,-20(s0)
+        addi    a5,a5,-1
+        sw      a5,-20(s0)
+.L4:
+        lw      a5,-20(s0)
+        bne     a5,zero,.L5
+        lw      a5,-28(s0)
+        sw      a5,-192(s0)
+
+	sw	a5,20(t0)
+	srli	t1,a5,16
+	sw	t1,20(t0)
+
+        lw      a5,-24(s0)
+        sw      a5,-196(s0)
+
+	sw	a5,20(t0)
+	srli	t1,a5,16
+	sw	t1,20(t0)
+
+        li      a5,0
+        mv      a0,a5
+        lw      s0,200(sp)
+        addi    sp,sp,208
+        ebreak
