@@ -1,0 +1,7 @@
+sum of cubes FPGA testcases:
+test 1: cube of odd numbers between -3 (provided via switches) and 8 (hardcoded)
+	answer displayed on LEDs = 468 (0x01d4)
+test 2: cube of odd numbers between 1 (provided via switches) and 8 (hardcoded)
+	answer displayed on LEDs = 496 (0x01f0)
+test 3: cube of odd numbers between 5 (provided via switches) and 8 (hardcoded)
+	answer displayed on LEDs = 468 (0x01d4)

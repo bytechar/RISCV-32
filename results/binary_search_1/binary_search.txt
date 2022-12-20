@@ -1,0 +1,4 @@
+binary search FPGA testcases:
+test 1: search for 21 (0x15), present at memory location 9 (ba+9*4)
+test 2: search for 3 (0x3), present at memory location 1 (ba+1*4)
+test 3: search for 8 (0x8), not present in memory
