@@ -41,7 +41,14 @@ always #(clock_period/2) clk=~clk;
 
 initial begin: INTEGRATION_TESTS 
    
-    file_test_cases = $fopen("integration_testcases.csv","r");
+    //file_test_cases = $fopen("integration_testcases.csv","r");
+    //file_test_cases = $fopen("integration_testcases2.csv","r");
+    //file_test_cases = $fopen("binary_search_1.csv","r");
+    //file_test_cases = $fopen("cubes_positive.csv","r");
+    file_test_cases = $fopen("sum_cubes.csv","r");
+    //file_test_cases = $fopen("rc5.csv","r");
+    //file_test_cases = $fopen("rc5_complex.csv","r");
+   
     if (file_test_cases == 0) begin
         $display("Could not open test cases file.");
         $stop;
