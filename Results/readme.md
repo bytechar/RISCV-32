@@ -1,0 +1,1 @@
+This folder contains all the results related to the integrated design, resource utilisation over FPGA, behavorial testing using unit testing, complex functionality testing as well as post-synthesis timming reports.
