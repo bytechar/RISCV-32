@@ -13,7 +13,7 @@ Group_5
 - All mem files inside RISCV_project.srcs > sources_1 > imports
 - FSM control and Top Level Integration schematics inside Schematics
 
-![Integration](https://github.com/naman-47/RISCV-32I-AHD/blob/main/Integration.drawio.png)
+![Integration](https://github.com/naman-47/RISCV-32I-AHD/blob/main/Integration.png)
 
 ## ALU
 1. Design (alu.v)
