@@ -10,10 +10,12 @@
 
 reset_handler:
 add x7, x7, x0 		# Output x7 = 0
-addi x5, x0 , -3
-addi x6, x0, 20
+lui x2, 0x00100
+lh x5, 16(x2)
+sw x5, 20(x2)		# show x5 on leds
+addi x6, x0 , 8
 add x18, x0, x5 	# x18 = x5
-blt x5, x6, continue 	# We want to store lower value in x18 and higher in x6
+blt x5, x6, continue 	# We want to store lower value in x5 and higher in x6
 add x18, x0, x6 	# If x5 >= x6, x18 = x6
 add x6, x0, x5 		# x6 = x5
 
@@ -57,8 +59,5 @@ addi x18, x18, 2 	# i = i + 2, increment iterator to next odd number
 blt x18, x6, loopi 	# If iterator i <= N2, run loop i again
 
 endi: 			# end loopi
-lui x2, 0x00100
-sw x5, 20(x2)		# show x5 on leds
-sw x6, 20(x2)		# show x6 on leds
 sw x7, 20(x2)		# show x7 on leds
 ecall
