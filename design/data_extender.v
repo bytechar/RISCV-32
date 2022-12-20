@@ -23,4 +23,4 @@ output wire [31:0] d_out
     
     assign d_out = data_out;
     
-endmodue
+endmodule
