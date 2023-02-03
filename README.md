@@ -1,5 +1,4 @@
 # RISCV-32
-Advanced Hardware Design Project
 
 Group_5
 1. Anvay Gumaste(ag5994)
