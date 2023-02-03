@@ -1,4 +1,4 @@
-# RISCV-32I-AHD
+# RISCV-32
 Advanced Hardware Design Project
 
 Group_5
